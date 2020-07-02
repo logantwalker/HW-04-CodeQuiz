@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- linking stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel='stylesheet' href='style.css'>
+    <title>HW04: Code Quiz</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a href='' class="navbar-brand">
+           Scoreboard
+        </a>
+        <ul class='navbar-nav'>
+            <li class='nav-item'><span id='minutesDisplay'>2</span><span>:</span><span id='secondsDisplay'>00</span></li>
+        </ul>
+    </nav>
+    <main class='container' >
+        <div class='row justify-content-center' id='home-block'>
+            <div class='row justify-content-center'>
+                <div class='col-8 col-xs-12 col-sm-10' id='home-content'>
+                    <h2 style='margin-bottom: 3%;'>Coding Quiz Challenge</h2>
+                    <p>Test your full-stack knowledge against the world in this Coding Quiz Challenge! Begin the timed, two
+                        minute quiz by
+                        pressing the start button below. You will receive 10 points for a correct answer, and you will lose
+                        10 seconds from the clock for an incorrect answer. If the clock hits zero, the quiz will end!</p>
+                </div>
+            </div>
+            <div class='row justify-content-center'>
+                <div class='col-8 col-xs-12 col-sm-10' id='home-content'>
+                    <button type='button' id='start'>START</button>
+                </div>
+            </div>
+        </div>
+        <div class='row' id='q-block'>
+            <div class='col-8 col-xs-12 col-sm-10' id='q-content'>
+                <h3 class='question'>Placeholder</h3>
+                <ol class='choices'>
+                </ol>
+            </div>
+        </div>
+    </main>
+    <!-- scripts and import data -->
+    <script src='script.js'></script>
+</body>
+
+</html>

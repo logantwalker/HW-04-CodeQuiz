@@ -1,0 +1,29 @@
+html {
+    position: relative;
+    min-height: 100%;
+  }
+body{
+    margin-bottom: 10%;
+    overflow-x: hidden;
+}
+.container{
+    margin-top:2%;
+    justify-content: center;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+.navbar-nav{
+    color: #ffffff;
+}
+#home-block{
+    padding:0%;
+    display: flex;
+}
+#home-content{
+    width:100;
+    text-align: center;
+}
+#q-block{
+    display: none;
+}
+
