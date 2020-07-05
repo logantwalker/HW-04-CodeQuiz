@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jQuery -->
+    <script src = 'https://code.jquery.com/jquery-3.5.1.min.js'></script>
     <!-- linking stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -14,7 +16,7 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
         <a href='' class="navbar-brand">
-           Scoreboard
+           Leaderboard
         </a>
         <ul class='navbar-nav'>
             <li class='nav-item'><span id='minutesDisplay'>2</span><span>:</span><span id='secondsDisplay'>00</span></li>
@@ -40,13 +42,14 @@
         <div class='row' id='q-block'>
             <div class='col-8 col-xs-12 col-sm-10' id='q-content'>
                 <h3 class='question'>Placeholder</h3>
-                <ol class='choices'>
-                </ol>
+                <ul class='choices'>
+                </ul>
+                <button type='button' id='continue'>Continue</button>
             </div>
         </div>
     </main>
     <!-- scripts and import data -->
-    <script src='script.js'></script>
+    <script defer type ='text/javascript' src='script.js'></script>
 </body>
 
 </html>

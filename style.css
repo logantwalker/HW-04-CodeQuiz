@@ -26,4 +26,19 @@ body{
 #q-block{
     display: none;
 }
+#q-content{
+    padding:0%;
+}
 
+.choices{
+    margin-top:5%;
+    padding:0%;
+}
+.choices li{
+    padding:3%;
+    border:1px solid inherit ;
+    color:#ffffff;
+    background-color: indigo;
+    border-radius: 15px;
+    margin-bottom:5%;
+}

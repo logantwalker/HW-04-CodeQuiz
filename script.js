@@ -1,32 +1,54 @@
 // getting all my elements together
+const container = document.querySelector('.container');
 const homePage = document.querySelector('#home-block');
 const quizPage = document.querySelector('#q-block');
 const startBtn = document.querySelector('#start');
 const currentQ = document.querySelector('.question');
 const currentC = document.querySelector('.choices');
+const contBtn = document.querySelector('#continue');
 
 // initializing var for later
-index = 0;
+let userPts = 0;
+let index = 0;
+let timeTotal = 120 * 1000;
+let breakTime = 0;
+let order = [0, 1, 2, 3];
 
 // initializing the page
 init();
 function init() {
+    order = qOrder();
+    index = 0;
     homePage.setAttribute('style', 'display: flex');
     quizPage.setAttribute('style', 'display: none');
+    minutesDisplay.textContent = '2';
+    secondsDisplay.textContent = '00';
 }
 // start button functionality
 startBtn.onclick = () => {
+    breakTime = 0;
     homePage.setAttribute('style', 'display: none');
     quizPage.setAttribute('style', 'display: flex');
+    container.setAttribute('style', 'padding-left: 10%');
     timeManager();
+    qLoad();
+}
+
+// continue button functionality
+contBtn.onclick = () =>{
+    index++;
+    $('.choices').empty();
+    console.log(index);
+    if(index > order.length - 1){
+        breakTime++;
+    }
     qLoad();
 }
 
 //timer functionality
 function timeManager() {
     let currentTime = new Date().getTime();
-    let endTime = 120 * 1000 + currentTime;
-
+    let endTime = currentTime + timeTotal;
     let secondsInterval = setInterval(function () {
         let now = new Date().getTime();
         let timeRemain = endTime - now;
@@ -45,6 +67,13 @@ function timeManager() {
 
         if (timeRemain < 0) {
             clearInterval(secondsInterval);
+            alert('timer has ended!');
+
+            init();
+        }
+        if (breakTime > 0) {
+            clearInterval(secondsInterval);
+            alert('quiz has finished');
         }
     }, 100);
 };
@@ -54,59 +83,125 @@ function qOrder() {
     let order = [0, 1, 2, 3];
     // starting at the last index of the order array, we randomly switch the index value with one that occurs before it
     for (let i = order.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random()*(i+1));
+        let j = Math.floor(Math.random() * (i + 1));
         let t = order[i];
-        order[i]=order[j];
-        order[j]= t;
+        order[i] = order[j];
+        order[j] = t;
     }
     return order;
 }
 // rendering the current question
 function qLoad() {
-    order = qOrder();
-
-    if(order[index] === 0){
+    if (order[index] === 0) {
         currentQ.textContent = Q.q1;
         let choices = Q.choice1;
-        for(let i=0; i<choices.length; i++){
+        for (let i = 0; i < choices.length; i++) {
             let li = document.createElement("li");
-            li.setAttribute('id',i);
+            li.setAttribute('id', i);
+            li.setAttribute('class', 'choice-item');
             li.textContent = choices[i];
             currentC.appendChild(li);
         }
     }
-    else if(order[index] === 1){
+    else if (order[index] === 1) {
         currentQ.textContent = Q.q2;
         let choices = Q.choice2;
-        for(let i=0; i<choices.length; i++){
+        for (let i = 0; i < choices.length; i++) {
             let li = document.createElement("li");
-            li.setAttribute('id',i);
+            li.setAttribute('id', i);
+            li.setAttribute('class', 'choice-item');
             li.textContent = choices[i];
             currentC.appendChild(li);
         }
     }
-    else if(order[index] === 2){
+    else if (order[index] === 2) {
         currentQ.textContent = Q.q3;
         let choices = Q.choice3;
-        for(let i=0; i<choices.length; i++){
+        for (let i = 0; i < choices.length; i++) {
             let li = document.createElement("li");
-            li.setAttribute('id',i);
+            li.setAttribute('id', i);
+            li.setAttribute('class', 'choice-item');
             li.textContent = choices[i];
             currentC.appendChild(li);
         }
     }
-    else if(order[index] === 3){
+    else if (order[index] === 3) {
         currentQ.textContent = Q.q4;
         let choices = Q.choice4;
-        for(let i=0; i<choices.length; i++){
+        for (let i = 0; i < choices.length; i++) {
             let li = document.createElement("li");
-            li.setAttribute('id',i);
+            li.setAttribute('class', 'choice-item');
+            li.setAttribute('id', i);
             li.textContent = choices[i];
             currentC.appendChild(li);
         }
     }
 }
 
+function answerCheck(event) {
+    if (event.target.tagName === 'LI') {
+        let user = event.target.id;
+        if (order[index] === 0) {
+            let ans = Q.ans1;
+            if (user === ans) {
+                let j = parseInt(user);
+                console.log(currentC.children[j].setAttribute('style','background-color: #008000'));
+                userPts += 10;
+            }
+            else {
+                let j = parseInt(user);
+                let k = parseInt(ans);
+                console.log(currentC.children[j].setAttribute('style','background-color: #ff0000'));
+                console.log(currentC.children[k].setAttribute('style','background-color: #008000'));
+            }
+        }
+        else if (order[index] === 1) {
+            let ans = Q.ans2;
+            if (user === ans) {
+                let j = parseInt(user);
+                console.log(currentC.children[j].setAttribute('style','background-color: #008000'));
+            }
+            else {
+                let j = parseInt(user);
+                let k = parseInt(ans);
+                console.log(currentC.children[j].setAttribute('style','background-color: #ff0000'));
+                console.log(currentC.children[k].setAttribute('style','background-color: #008000'));
+            }
+        }
+        else if (order[index] === 2) {
+            let ans = Q.ans3;
+            if(user === ans){
+                let j = parseInt(user);
+                console.log(currentC.children[j].setAttribute('style','background-color: #008000'));
+            }
+            else{
+                let j = parseInt(user);
+                let k = parseInt(ans);
+                console.log(currentC.children[j].setAttribute('style','background-color: #ff0000'));
+                console.log(currentC.children[k].setAttribute('style','background-color: #008000'));
+            }
+        }
+        else if (order[index] === 3) {
+            let ans = Q.ans4;
+            if(user === ans){
+                let j = parseInt(user);
+                console.log(currentC.children[j].setAttribute('style','background-color: #008000'));
+            }
+            else{
+                let j = parseInt(user);
+                let k = parseInt(ans);
+                console.log(currentC.children[j].setAttribute('style','background-color: #ff0000'));
+                console.log(currentC.children[k].setAttribute('style','background-color: #008000'));
+            }
+        }
+    }
+    else {
+        return;
+    }
+}
+
+
+currentC.addEventListener('click', answerCheck);
 
 
 
@@ -120,7 +215,7 @@ const Q = {
         'Loops automatically iterate a block of code based on conditions',
         'All loops help the computer make decisions automatically'
     ],
-    ans1: 2,
+    ans1: '2',
 
     q2: 'Which of the following statements is correct?',
     choice2: [
@@ -129,7 +224,7 @@ const Q = {
         "Objects can't store other objects",
         'Objects store unordered data of any type as key-value pairs'
     ],
-    ans2: 3,
+    ans2: '3',
 
     q3: 'Which of the methods below does NOT change the array it is called on?',
     choice3: [
@@ -138,7 +233,7 @@ const Q = {
         '.pop()',
         '.shift()'
     ],
-    ans3: 0,
+    ans3: '0',
 
     q4: 'Which of the following methods returns a new array?',
     choice4: [
@@ -147,6 +242,6 @@ const Q = {
         '.forEach()',
         '.filter()'
     ],
-    ans4: 3,
+    ans4: '3',
 
 };
