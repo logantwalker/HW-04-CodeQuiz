@@ -12,6 +12,7 @@ const alertMsg = document.querySelector('#alert-message');
 
 // initializing var for later
 let userPts = 0;
+let penalty = false;
 let index = 0;
 let timeTotal = 120 * 1000;
 let breakTime = 0;
@@ -54,6 +55,7 @@ function timeManager() {
     let currentTime = new Date().getTime();
     let endTime = currentTime + timeTotal;
     let secondsInterval = setInterval(function () {
+
         let now = new Date().getTime();
         let timeRemain = endTime - now;
 
@@ -78,6 +80,11 @@ function timeManager() {
         if (breakTime > 0) {
             clearInterval(secondsInterval);
             alert('quiz has finished');
+        }
+        //applies time penalty for incorrect answers
+        if(penalty){
+            endTime =  endTime -10*1000;
+            penalty = false;
         }
     }, 100);
 };
@@ -163,6 +170,8 @@ function answerCheck(event) {
                 currentC.children[j].setAttribute('style', 'background-color: #ff0000');
                 currentC.children[k].setAttribute('style', 'background-color: #008000');
 
+                penalty = true;
+
                 alertMsg.textContent = 'Wrong!';
                 Alerter();
             }
@@ -184,6 +193,8 @@ function answerCheck(event) {
                 let k = parseInt(ans);
                 currentC.children[j].setAttribute('style', 'background-color: #ff0000');
                 currentC.children[k].setAttribute('style', 'background-color: #008000');
+
+                penalty = true;
 
                 alertMsg.textContent = 'Wrong!';
                 Alerter();
@@ -207,6 +218,8 @@ function answerCheck(event) {
                 currentC.children[j].setAttribute('style', 'background-color: #ff0000');
                 currentC.children[k].setAttribute('style', 'background-color: #008000');
 
+                penalty = true;
+
                 alertMsg.textContent = 'Wrong!';
                 Alerter();
             }
@@ -229,6 +242,8 @@ function answerCheck(event) {
                 currentC.children[j].setAttribute('style', 'background-color: #ff0000');
                 currentC.children[k].setAttribute('style', 'background-color: #008000');
 
+                penalty = true;
+
                 alertMsg.textContent = 'Wrong!';
                 Alerter();
             }
@@ -237,7 +252,6 @@ function answerCheck(event) {
     else {
         return;
     }
-    console.log(alertMsg.textContent);
 }
 // activates/deactivates the answer alert message
 function Alerter() {
@@ -252,9 +266,7 @@ function Alerter() {
     },1000);
     
 }
-
 currentC.addEventListener('click', answerCheck);
-
 
 
 // question object
