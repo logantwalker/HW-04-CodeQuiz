@@ -6,6 +6,9 @@ const startBtn = document.querySelector('#start');
 const currentQ = document.querySelector('.question');
 const currentC = document.querySelector('.choices');
 const contBtn = document.querySelector('#continue');
+const score = document.querySelector('#userPts');
+const ansAlert = document.querySelector('#alert');
+const alertMsg = document.querySelector('#alert-message');
 
 // initializing var for later
 let userPts = 0;
@@ -19,6 +22,7 @@ init();
 function init() {
     order = qOrder();
     index = 0;
+    userPts=0;
     homePage.setAttribute('style', 'display: flex');
     quizPage.setAttribute('style', 'display: none');
     minutesDisplay.textContent = '2';
@@ -35,11 +39,11 @@ startBtn.onclick = () => {
 }
 
 // continue button functionality
-contBtn.onclick = () =>{
+contBtn.onclick = () => {
     index++;
     $('.choices').empty();
     console.log(index);
-    if(index > order.length - 1){
+    if (index > order.length - 1) {
         breakTime++;
     }
     qLoad();
@@ -145,61 +149,109 @@ function answerCheck(event) {
             let ans = Q.ans1;
             if (user === ans) {
                 let j = parseInt(user);
-                console.log(currentC.children[j].setAttribute('style','background-color: #008000'));
+                currentC.children[j].setAttribute('style', 'background-color: #008000');
+                //updating user points
                 userPts += 10;
+                score.textContent = userPts;
+                
+                alertMsg.textContent = 'Correct!';
+                Alerter();
             }
             else {
                 let j = parseInt(user);
                 let k = parseInt(ans);
-                console.log(currentC.children[j].setAttribute('style','background-color: #ff0000'));
-                console.log(currentC.children[k].setAttribute('style','background-color: #008000'));
+                currentC.children[j].setAttribute('style', 'background-color: #ff0000');
+                currentC.children[k].setAttribute('style', 'background-color: #008000');
+
+                alertMsg.textContent = 'Wrong!';
+                Alerter();
             }
         }
         else if (order[index] === 1) {
             let ans = Q.ans2;
             if (user === ans) {
                 let j = parseInt(user);
-                console.log(currentC.children[j].setAttribute('style','background-color: #008000'));
+                currentC.children[j].setAttribute('style', 'background-color: #008000');
+                //updating user points
+                userPts += 10;
+                score.textContent = userPts;
+
+                alertMsg.textContent = 'Correct!';
+                Alerter();
             }
             else {
                 let j = parseInt(user);
                 let k = parseInt(ans);
-                console.log(currentC.children[j].setAttribute('style','background-color: #ff0000'));
-                console.log(currentC.children[k].setAttribute('style','background-color: #008000'));
+                currentC.children[j].setAttribute('style', 'background-color: #ff0000');
+                currentC.children[k].setAttribute('style', 'background-color: #008000');
+
+                alertMsg.textContent = 'Wrong!';
+                Alerter();
             }
         }
         else if (order[index] === 2) {
             let ans = Q.ans3;
-            if(user === ans){
+            if (user === ans) {
                 let j = parseInt(user);
-                console.log(currentC.children[j].setAttribute('style','background-color: #008000'));
+                currentC.children[j].setAttribute('style', 'background-color: #008000');
+                //updating user points
+                userPts += 10;
+                score.textContent = userPts;
+
+                alertMsg.textContent = 'Correct!';
+                Alerter();
             }
-            else{
+            else {
                 let j = parseInt(user);
                 let k = parseInt(ans);
-                console.log(currentC.children[j].setAttribute('style','background-color: #ff0000'));
-                console.log(currentC.children[k].setAttribute('style','background-color: #008000'));
+                currentC.children[j].setAttribute('style', 'background-color: #ff0000');
+                currentC.children[k].setAttribute('style', 'background-color: #008000');
+
+                alertMsg.textContent = 'Wrong!';
+                Alerter();
             }
         }
         else if (order[index] === 3) {
             let ans = Q.ans4;
-            if(user === ans){
+            if (user === ans) {
                 let j = parseInt(user);
-                console.log(currentC.children[j].setAttribute('style','background-color: #008000'));
+                currentC.children[j].setAttribute('style', 'background-color: #008000');
+                //updating user points
+                userPts += 10;
+                score.textContent = userPts;
+                
+                alertMsg.textContent = 'Correct!';
+                Alerter();
             }
-            else{
+            else {
                 let j = parseInt(user);
                 let k = parseInt(ans);
-                console.log(currentC.children[j].setAttribute('style','background-color: #ff0000'));
-                console.log(currentC.children[k].setAttribute('style','background-color: #008000'));
+                currentC.children[j].setAttribute('style', 'background-color: #ff0000');
+                currentC.children[k].setAttribute('style', 'background-color: #008000');
+
+                alertMsg.textContent = 'Wrong!';
+                Alerter();
             }
         }
     }
     else {
         return;
     }
+    console.log(alertMsg.textContent);
 }
-
+// activates/deactivates the answer alert message
+function Alerter() {
+    let alertHelp = 0;
+    ansAlert.setAttribute('style','display: flex');
+    let alertInterval = setInterval(function(){
+        alertHelp++;
+        if(alertHelp > 1){
+            clearInterval(alertInterval)
+            ansAlert.setAttribute('style','display: none');
+        }
+    },1000);
+    
+}
 
 currentC.addEventListener('click', answerCheck);
 

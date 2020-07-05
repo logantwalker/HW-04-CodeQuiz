@@ -29,8 +29,15 @@ body{
 #q-content{
     padding:0%;
 }
+#alert{
+    border-top: 2px solid gray;
+    color: gray;
+    margin-top:5%;
+    display:none;
+}
 
 .choices{
+    font-size: larger ;
     margin-top:5%;
     padding:0%;
 }
