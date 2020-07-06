@@ -40,6 +40,9 @@ body{
     display: none;
 }
 
+#high-scores{
+    display:none;
+}
 
 .choices{
     font-size: larger ;

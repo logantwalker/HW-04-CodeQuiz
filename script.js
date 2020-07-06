@@ -13,6 +13,7 @@ const userPage = document.querySelector('#enterUser');
 const scoreDisp = document.querySelector('#finalScore');
 const userSubmitBtn = document.querySelector('#userSubmit');
 const userForm = document.querySelector('#initials');
+const scorePage = document.querySelector('#high-scores');
 
 // initializing var for later
 let userPts = 0;
@@ -62,6 +63,7 @@ contBtn.onclick = () => {
         breakTime++;
     }
     qLoad();
+    
 }
 //timer functionality
 function timeManager() {
@@ -294,12 +296,48 @@ function captureUser() {
 }
 userSubmitBtn.onclick = function () {
     captureUser();
+    loadScores();
 }
 
 function loadScores() {
+    userPage.setAttribute('style', 'display: none');
+    scorePage.setAttribute('style', 'display: flex');
+    leaderboard = JSON.parse(localStorage.getItem('leaderboard'));
+    let dataList = leaderboard.scores;
+    
+    let userList=[];
+    let scoreList=[];
+    let timeList=[];
 
+    dataList.forEach(e =>{
+        userList.push(e[0]);
+    });
+    dataList.forEach(e =>{
+        scoreList.push(e[1]);
+    });
+    dataList.forEach(e =>{
+        timeList.push(e[2]);
+    });
 }
 
+function dataSort(userList,scoreList,timeList) {
+    dataList=[];
+    let sorted ;
+    while(!sorted){
+        
+        for(i=0; i<scoreList.length; i++){
+            if(scoreList[i] < scoreList[i+1]){
+                let h = scoreList[i+1];
+                scoreList[i+1] = scoreList[i];
+                scoreList[i] = h;
+            }
+            else{
+                console.log('ordered');
+            }
+        }
+    }
+
+}
 // question object
 const Q = {
     q1: 'What is the general purpose of a loop?',

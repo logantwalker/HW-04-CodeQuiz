@@ -15,7 +15,7 @@
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
-        <a href='' class="navbar-brand">
+        <a href='' class="navbar-brand" id='navigate'>
             Leaderboard
         </a>
         <ul class='navbar-nav'>
@@ -44,7 +44,6 @@
                 </div>
             </div>
         </section>
-
         <section class='row' id='q-block'>
             <div class='col-8 col-xs-12 col-sm-10' id='q-content'>
                 <h3 class='question'>Placeholder</h3>
@@ -65,6 +64,15 @@
                     <label for='initials'>Enter Your Intials:</label>
                     <input type= 'text' class= 'form-control' id='initials' placeholder="FirstLast" >
                     <button type='submit' id= 'userSubmit' class= 'btn btn-dark' style="margin-top:5%">Submit</button>
+                </div>
+            </div>
+        </section>
+        <section class='row' id='high-scores'>
+            <div class='row'>
+                <div class= 'col-12'>
+                    <h1>Leaderboard</h1>
+                    <ol id='championList'>
+                    </ol>
                 </div>
             </div>
         </section>
