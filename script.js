@@ -9,6 +9,10 @@ const contBtn = document.querySelector('#continue');
 const score = document.querySelector('#userPts');
 const ansAlert = document.querySelector('#alert');
 const alertMsg = document.querySelector('#alert-message');
+const userPage = document.querySelector('#enterUser');
+const scoreDisp = document.querySelector('#finalScore');
+const userSubmitBtn = document.querySelector('#userSubmit');
+const userForm = document.querySelector('#initials');
 
 // initializing var for later
 let userPts = 0;
@@ -17,17 +21,28 @@ let index = 0;
 let timeTotal = 120 * 1000;
 let breakTime = 0;
 let order = [0, 1, 2, 3];
-
+let userData = [];
+let leaderboard = JSON.parse(localStorage.getItem('leaderboard'));
+console.log(leaderboard);
 // initializing the page
 init();
+localStorage.clear();
 function init() {
-    order = qOrder();
+
     index = 0;
-    userPts=0;
+    userPts = 0;
     homePage.setAttribute('style', 'display: flex');
     quizPage.setAttribute('style', 'display: none');
     minutesDisplay.textContent = '2';
     secondsDisplay.textContent = '00';
+
+    if(!localStorage.getItem('leaderboard')){
+        console.log('empty storage');
+        leaderboard = {};
+    }
+    else{
+        userData = leaderboard.scores;
+    }
 }
 // start button functionality
 startBtn.onclick = () => {
@@ -35,21 +50,19 @@ startBtn.onclick = () => {
     homePage.setAttribute('style', 'display: none');
     quizPage.setAttribute('style', 'display: flex');
     container.setAttribute('style', 'padding-left: 10%');
+    order = qOrder();
     timeManager();
     qLoad();
 }
-
 // continue button functionality
 contBtn.onclick = () => {
     index++;
     $('.choices').empty();
-    console.log(index);
     if (index > order.length - 1) {
         breakTime++;
     }
     qLoad();
 }
-
 //timer functionality
 function timeManager() {
     let currentTime = new Date().getTime();
@@ -73,17 +86,16 @@ function timeManager() {
 
         if (timeRemain < 0) {
             clearInterval(secondsInterval);
-            alert('timer has ended!');
-
-            init();
+            loadUserPage();
         }
         if (breakTime > 0) {
             clearInterval(secondsInterval);
-            alert('quiz has finished');
+            loadUserPage();
         }
+
         //applies time penalty for incorrect answers
-        if(penalty){
-            endTime =  endTime -10*1000;
+        if (penalty) {
+            endTime = endTime - 25 * 1000;
             penalty = false;
         }
     }, 100);
@@ -158,9 +170,9 @@ function answerCheck(event) {
                 let j = parseInt(user);
                 currentC.children[j].setAttribute('style', 'background-color: #008000');
                 //updating user points
-                userPts += 10;
+                userPts += 50;
                 score.textContent = userPts;
-                
+
                 alertMsg.textContent = 'Correct!';
                 Alerter();
             }
@@ -182,7 +194,7 @@ function answerCheck(event) {
                 let j = parseInt(user);
                 currentC.children[j].setAttribute('style', 'background-color: #008000');
                 //updating user points
-                userPts += 10;
+                userPts += 50;
                 score.textContent = userPts;
 
                 alertMsg.textContent = 'Correct!';
@@ -206,7 +218,7 @@ function answerCheck(event) {
                 let j = parseInt(user);
                 currentC.children[j].setAttribute('style', 'background-color: #008000');
                 //updating user points
-                userPts += 10;
+                userPts += 50;
                 score.textContent = userPts;
 
                 alertMsg.textContent = 'Correct!';
@@ -230,9 +242,9 @@ function answerCheck(event) {
                 let j = parseInt(user);
                 currentC.children[j].setAttribute('style', 'background-color: #008000');
                 //updating user points
-                userPts += 10;
+                userPts += 50;
                 score.textContent = userPts;
-                
+
                 alertMsg.textContent = 'Correct!';
                 Alerter();
             }
@@ -256,18 +268,37 @@ function answerCheck(event) {
 // activates/deactivates the answer alert message
 function Alerter() {
     let alertHelp = 0;
-    ansAlert.setAttribute('style','display: flex');
-    let alertInterval = setInterval(function(){
+    ansAlert.setAttribute('style', 'display: flex');
+    let alertInterval = setInterval(function () {
         alertHelp++;
-        if(alertHelp > 1){
+        if (alertHelp > 1) {
             clearInterval(alertInterval)
-            ansAlert.setAttribute('style','display: none');
+            ansAlert.setAttribute('style', 'display: none');
         }
-    },1000);
-    
+    }, 1000);
+
 }
 currentC.addEventListener('click', answerCheck);
 
+function loadUserPage() {
+    scoreDisp.textContent = ' ' + userPts + '!';
+    quizPage.setAttribute('style', 'display: none');
+    userPage.setAttribute('style', 'display: flex');
+}
+
+function captureUser() {
+    let newData = [userForm.value, userPts, `${minutesDisplay.innerHTML}:${secondsDisplay.innerHTML}`];
+    userData.push(newData);
+    leaderboard.scores = userData;
+    localStorage.setItem('leaderboard',JSON.stringify(leaderboard));
+}
+userSubmitBtn.onclick = function () {
+    captureUser();
+}
+
+function loadScores() {
+
+}
 
 // question object
 const Q = {

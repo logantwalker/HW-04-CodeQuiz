@@ -36,6 +36,11 @@ body{
     display:none;
 }
 
+#enterUser{
+    display: none;
+}
+
+
 .choices{
     font-size: larger ;
     margin-top:5%;

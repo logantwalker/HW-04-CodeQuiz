@@ -32,15 +32,15 @@
                     <p>Test your full-stack knowledge against the world in this Coding Quiz Challenge! Begin the timed,
                         two
                         minute quiz by
-                        pressing the start button below. You will receive 10 points for a correct answer, and you will
+                        pressing the start button below. You will receive 50 points for a correct answer, and you will
                         lose
-                        10 seconds from the clock for an incorrect answer. If the clock hits zero, the quiz will end!
+                        25 seconds from the clock for an incorrect answer. If the clock hits zero, the quiz will end!
                     </p>
                 </div>
             </div>
             <div class='row justify-content-center'>
                 <div class='col-8 col-xs-12 col-sm-10' id='home-content'>
-                    <button type='button' id='start'>START</button>
+                    <button type='button' class='btn btn-dark' id='start'>START</button>
                 </div>
             </div>
         </section>
@@ -50,13 +50,25 @@
                 <h3 class='question'>Placeholder</h3>
                 <ul class='choices'>
                 </ul>
-                <button type='button' id='continue'>Continue</button>
+                <button type='button' class='btn btn-dark' id='continue'>Continue</button>
             </div>
         </section>
-
-        <section class='row' id='alert'>
+        <aside class='row' id='alert'>
             <h4 id='alert-message'></h4>
+        </aside>
+        <section class='row' id='enterUser'>
+            <div class= 'row'>
+                <div class ='col-12'>
+                    <h1><b>All Done!</b></h1>
+                    <h4>Your final score is<span id ='finalScore'></span></h4>
+
+                    <label for='initials'>Enter Your Intials:</label>
+                    <input type= 'text' class= 'form-control' id='initials' placeholder="FirstLast" >
+                    <button type='submit' id= 'userSubmit' class= 'btn btn-dark' style="margin-top:5%">Submit</button>
+                </div>
+            </div>
         </section>
+        
     </main>
     <!-- scripts and import data -->
     <script defer type='text/javascript' src='script.js'></script>
