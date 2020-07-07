@@ -267,7 +267,7 @@ function answerCheck(event) {
                 Alerter();
             }
         }
-        setTimeout(nextQ,2000);
+        setTimeout(nextQ,850);
     }
     else {
         return;
@@ -283,7 +283,7 @@ function Alerter() {
             clearInterval(alertInterval)
             ansAlert.setAttribute('style', 'display: none');
         }
-    }, 2000);
+    }, 850);
 
 }
 currentC.addEventListener('click', answerCheck);
