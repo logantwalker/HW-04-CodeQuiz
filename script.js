@@ -5,7 +5,6 @@ const quizPage = document.querySelector('#q-block');
 const startBtn = document.querySelector('#start');
 const currentQ = document.querySelector('.question');
 const currentC = document.querySelector('.choices');
-const contBtn = document.querySelector('#continue');
 const score = document.querySelector('#userPts');
 const ansAlert = document.querySelector('#alert');
 const alertMsg = document.querySelector('#alert-message');
@@ -14,23 +13,27 @@ const scoreDisp = document.querySelector('#finalScore');
 const userSubmitBtn = document.querySelector('#userSubmit');
 const userForm = document.querySelector('#initials');
 const scorePage = document.querySelector('#high-scores');
+const leadList = document.querySelector('#championList');
+const homeBtn = document.querySelector('#homeBtn');
+const leadNav = document.querySelector('#navigate');
+
 
 // initializing var for later
 let userPts = 0;
 let penalty = false;
-let index = 0;
+let index;
 let timeTotal = 120 * 1000;
 let breakTime = 0;
 let order = [0, 1, 2, 3];
 let userData = [];
 let leaderboard = JSON.parse(localStorage.getItem('leaderboard'));
-console.log(leaderboard);
+
 // initializing the page
 init();
-localStorage.clear();
 function init() {
-
-    index = 0;
+    $('#championList').empty();
+    userForm.value= null;
+    index = null;
     userPts = 0;
     homePage.setAttribute('style', 'display: flex');
     quizPage.setAttribute('style', 'display: none');
@@ -38,15 +41,16 @@ function init() {
     secondsDisplay.textContent = '00';
 
     if(!localStorage.getItem('leaderboard')){
-        console.log('empty storage');
         leaderboard = {};
     }
     else{
         userData = leaderboard.scores;
+        
     }
 }
 // start button functionality
 startBtn.onclick = () => {
+    index = 0;
     breakTime = 0;
     homePage.setAttribute('style', 'display: none');
     quizPage.setAttribute('style', 'display: flex');
@@ -55,8 +59,8 @@ startBtn.onclick = () => {
     timeManager();
     qLoad();
 }
-// continue button functionality
-contBtn.onclick = () => {
+// loads the next question
+function nextQ () {
     index++;
     $('.choices').empty();
     if (index > order.length - 1) {
@@ -262,6 +266,7 @@ function answerCheck(event) {
                 Alerter();
             }
         }
+        setTimeout(nextQ,1000);
     }
     else {
         return;
@@ -277,7 +282,7 @@ function Alerter() {
             clearInterval(alertInterval)
             ansAlert.setAttribute('style', 'display: none');
         }
-    }, 1000);
+    }, 850);
 
 }
 currentC.addEventListener('click', answerCheck);
@@ -295,8 +300,17 @@ function captureUser() {
     localStorage.setItem('leaderboard',JSON.stringify(leaderboard));
 }
 userSubmitBtn.onclick = function () {
-    captureUser();
-    loadScores();
+    if(userForm.value && userForm.value.length < 4){
+        captureUser();
+        loadScores();
+    }
+    else if(userForm.value.length > 3){
+        alert('Please limit initials to max of 3 letters')
+    }
+    else{
+        alert('Please enter your initials!');
+        return;
+    }
 }
 
 function loadScores() {
@@ -318,26 +332,60 @@ function loadScores() {
     dataList.forEach(e =>{
         timeList.push(e[2]);
     });
-}
 
-function dataSort(userList,scoreList,timeList) {
+    sortRender(userList,scoreList,timeList);
+}
+//sorts and renders scores
+function sortRender(userList,scoreList,timeList) {
     dataList=[];
-    let sorted ;
-    while(!sorted){
-        
-        for(i=0; i<scoreList.length; i++){
-            if(scoreList[i] < scoreList[i+1]){
+    let sortCheck;
+    do {
+        sortCheck = false;
+        for(let i = 0; i<scoreList.length; i++){
+            if(scoreList[i] < scoreList [i+1]){
                 let h = scoreList[i+1];
                 scoreList[i+1] = scoreList[i];
                 scoreList[i] = h;
-            }
-            else{
-                console.log('ordered');
+
+                let l = userList[i+1];
+                userList[i+1] = userList[i];
+                userList[i] = l;
+
+                let k = timeList[i+1];
+                timeList[i+1] = timeList[i];
+                timeList[i] = k;
+                sortCheck = true;
             }
         }
-    }
+    }while(sortCheck);
 
+
+    for(i=0; i<scoreList.length; i++){
+        let pos = document.createElement('LI');
+        pos.textContent = `${userList[i]} - Final Score: ${scoreList[i]}, Time Remaining: ${timeList[i]}`;
+        leadList.append(pos);
+    }
 }
+
+homeBtn.onclick = function(){
+    scorePage.setAttribute('style', 'display: none');
+    init();
+}
+
+leadNav.onclick = function(event){
+    if(index === null){
+        init();
+        event.preventDefault();
+        quizPage.setAttribute('style', 'display: none');
+        userPage.setAttribute('style', 'display: none');
+        homePage.setAttribute('style', 'display: none');
+        loadScores();
+    }
+    else{
+        return;
+    }
+}
+
 // question object
 const Q = {
     q1: 'What is the general purpose of a loop?',
