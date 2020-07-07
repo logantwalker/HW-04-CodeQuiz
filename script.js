@@ -32,6 +32,7 @@ let leaderboard = JSON.parse(localStorage.getItem('leaderboard'));
 init();
 function init() {
     $('#championList').empty();
+    scoreDisp.textContent='0';
     userForm.value= null;
     index = null;
     userPts = 0;
