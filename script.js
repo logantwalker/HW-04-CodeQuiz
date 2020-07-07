@@ -267,7 +267,7 @@ function answerCheck(event) {
                 Alerter();
             }
         }
-        setTimeout(nextQ,1000);
+        setTimeout(nextQ,2000);
     }
     else {
         return;
@@ -283,7 +283,7 @@ function Alerter() {
             clearInterval(alertInterval)
             ansAlert.setAttribute('style', 'display: none');
         }
-    }, 850);
+    }, 2000);
 
 }
 currentC.addEventListener('click', answerCheck);
@@ -304,6 +304,7 @@ userSubmitBtn.onclick = function () {
     if(userForm.value && userForm.value.length < 4){
         captureUser();
         loadScores();
+        container.setAttribute('style', 'padding-left: 5%');
     }
     else if(userForm.value.length > 3){
         alert('Please limit initials to max of 3 letters')
